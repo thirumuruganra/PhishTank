@@ -1,22 +1,33 @@
 // background.js
 
 import { createDetectionNotification } from './checksus.js';
-
-// this listener now just detects and stores threats
+import { sendUrlToBackend } from './checksus.js';
+import { storeSuspiciousUrl } from './checksus.js';
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
-    if (changeInfo.url && tab.active) {
-        const newUrl = changeInfo.url;
-        
-        // for this test, we'll log every url
-        console.log(`URL DETECTED & STORED: ${newUrl}`);
-        
-        // store the url with a status of 'suspicious'
-        // using the url itself as the key is a more robust pattern
-        chrome.storage.local.set({ [newUrl]: 'suspicious' });
-
-        createDetectionNotification();
-    }
+  if (changeInfo.url) {
+    const newUrl = changeInfo.url;
+    console.log(`URL DETECTED & STORED: ${newUrl}`);
+    const result = await sendUrlToBackend(newUrl);
+    console.log(`URL: ${newUrl} classified as ${result}`);
+    chrome.storage.local.set({ [newUrl]: result });
+    createDetectionNotification(result);
+  }
 });
+// this listener now just detects and stores threats
+// chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+//     if (changeInfo.url) {
+//         const newUrl = changeInfo.url;
+        
+//         // for this test, we'll log every url
+//         console.log(`URL DETECTED & STORED: ${newUrl}`);
+        
+//         // store the url with a status of 'suspicious'
+//         // using the url itself as the key is a more robust pattern
+//         chrome.storage.local.set({ [newUrl]: 'suspicious' });
+
+//         createDetectionNotification();
+//     }
+// });
 
 // listeners for notification clicks remain the same
 chrome.notifications.onButtonClicked.addListener((notificationId, buttonIndex) => {

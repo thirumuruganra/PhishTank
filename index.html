@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="inner-window">
         <header>
             <h1 class="logo">PhishTank</h1>
@@ -23,9 +22,9 @@
                 <div class="slider-underline"></div>
             </nav>
         </header>
-
         <div class="content-slider-wrapper">
             <div class="content-slider">
+                <!-- Threats Tab -->
                 <main class="tab-content">
                     <div class="alert temporary-alert hidden">
                         <div class="alert-content">
@@ -34,39 +33,39 @@
                         </div>
                         <button class="close-btn" id="close-alert-btn">&times;</button>
                     </div>
-
                     <h2 class="sub-heading">Highlighted Threats</h2>
-
-                    <div id="threats-list">
-                        </div>
+                    <div id="threats-list"></div>
                 </main>
 
+                <!-- Whitelist Tab -->
                 <main class="tab-content">
                     <h2 class="sub-heading">Whitelist</h2>
                     <p class="description">A list of your trusted URLs will appear here.</p>
+                    <div id="whitelist-list"></div>
                 </main>
 
+                <!-- Blacklist Tab -->
                 <main class="tab-content">
                     <h2 class="sub-heading">Blacklist</h2>
                     <p class="description">A list of your blocked URLs will appear here.</p>
+                    <div id="blacklist-list"></div>
                 </main>
             </div>
         </div>
-        
+
         <div class="scanner-toggle">
             <button class="toggle-btn active" id="scan-url-btn">Scan URL</button>
             <button class="toggle-btn" id="scan-webpage-btn">Scan Webpage</button>
         </div>
-
         <footer>
             <button class="icon-btn" id="nav-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                <!-- SVG ICON -->
             </button>
             <button class="icon-btn" id="user-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <!-- SVG ICON -->
             </button>
             <button class="icon-btn" id="settings-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <!-- SVG ICON -->
             </button>
         </footer>
     </div>
