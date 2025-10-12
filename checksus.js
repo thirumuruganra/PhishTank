@@ -1,6 +1,4 @@
 // checksus.js
-console.log("Background service worker loaded");
-
 export function createDetectionNotification(result) {
     const message =
         result === 'blacklist'
@@ -26,7 +24,7 @@ export async function sendUrlToBackend(url) {
         });
 
         const data = await response.json();
-        if (data.prediction == "legitimate") { // "whitelist" or "blacklist"
+        if (data.prediction == "legitimate") {
             return "whitelist";
         } else if (data.prediction == "phishing") {
             return "blacklist";
@@ -37,28 +35,24 @@ export async function sendUrlToBackend(url) {
     }
 }
 
-export function storeSuspiciousUrl(url) {
-    chrome.storage.local.set({ 'suspiciousUrl': url, 'threatDetected': true });
+export async function sendEmailDataToBackend(emailData) {
+    try {
+        const response = await fetch('http://127.0.0.1:8000/predict_email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(emailData)
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Backend response for email scan:", data);
+        return data.prediction;
+
+    } catch (error) {
+        console.error('Backend request for email scan failed:', error);
+        return 'error';
+    }
 }
-
-// this function now checks the url's domain against the blacklist
-// export function isUrlSuspicious(url) {
-    
-// }
-
-// function to save the suspicious url for the popup
-// export function storeSuspiciousUrl(url) {
-//     chrome.storage.local.set({ 'suspiciousUrl': url, 'threatDetected': true });
-// }
-
-// function to create the chrome toast notification
-// export function createDetectionNotification() {
-//     chrome.notifications.create('suspicious-url-notif', {
-//         type: 'basic',
-//         iconUrl: 'icons/icon128.png',
-//         title: 'Phish Alert',
-//         message: 'A new URL was detected and logged.',
-//         priority: 2,
-//         buttons: [{ title: 'Open PhishTank to review' }]
-//     });
-// }
