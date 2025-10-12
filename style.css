@@ -39,7 +39,7 @@ html, body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 710px;
+    height: 570px;
     color: var(--primary-text-accent);
 }
 header {
