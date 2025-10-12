@@ -6,6 +6,16 @@ import { storeSuspiciousUrl } from './checksus.js';
 chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.url) {
     const newUrl = changeInfo.url;
+    
+    // Skip internal browser URLs
+    if (newUrl.startsWith('chrome://') || 
+        newUrl.startsWith('about:') || 
+        newUrl.startsWith('edge://') ||
+        newUrl.startsWith('chrome-extension://')) {
+      console.log(`Skipping internal URL: ${newUrl}`);
+      return;
+    }
+    
     console.log(`URL DETECTED & STORED: ${newUrl}`);
     const result = await sendUrlToBackend(newUrl);
     console.log(`URL: ${newUrl} classified as ${result}`);
