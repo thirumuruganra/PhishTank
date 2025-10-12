@@ -109,6 +109,67 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    // Toast notification function
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.textContent = message;
+        document.body.appendChild(toast);
+        
+        // Trigger animation
+        setTimeout(() => toast.classList.add('show'), 10);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    // Clear history functionality
+    const clearAllBtn = document.getElementById('clear-all-btn');
+    const clearWhitelistBtn = document.getElementById('clear-whitelist-btn');
+    const clearBlacklistBtn = document.getElementById('clear-blacklist-btn');
+
+    // Clear all history
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', () => {
+            chrome.storage.local.clear(() => {
+                console.log('All history cleared');
+                loadAllClassifiedUrls();
+                showToast('All history cleared successfully!');
+            });
+        });
+    }
+
+    // Clear whitelist only
+    if (clearWhitelistBtn) {
+        clearWhitelistBtn.addEventListener('click', () => {
+            chrome.storage.local.get(null, function(items) {
+                const whitelistKeys = Object.keys(items).filter(key => items[key] === 'whitelist');
+                chrome.storage.local.remove(whitelistKeys, () => {
+                    console.log('Whitelist cleared');
+                    loadAllClassifiedUrls();
+                    showToast('Whitelist cleared successfully!');
+                });
+            });
+        });
+    }
+
+    // Clear blacklist only
+    if (clearBlacklistBtn) {
+        clearBlacklistBtn.addEventListener('click', () => {
+            chrome.storage.local.get(null, function(items) {
+                const blacklistKeys = Object.keys(items).filter(key => items[key] === 'blacklist');
+                chrome.storage.local.remove(blacklistKeys, () => {
+                    console.log('Blacklist cleared');
+                    loadAllClassifiedUrls();
+                    showToast('Blacklist cleared successfully!');
+                });
+            });
+        });
+    }
+
     // Footer nav
     document.getElementById('nav-btn')?.addEventListener('click', () => console.log("Nav button clicked!"));
     document.getElementById('user-btn')?.addEventListener('click', () => console.log("User button clicked!"));

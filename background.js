@@ -7,12 +7,13 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   if (changeInfo.url) {
     const newUrl = changeInfo.url;
     
-    // Skip internal browser URLs
+    // Skip internal browser URLs and whitelisted domains
     if (newUrl.startsWith('chrome://') || 
         newUrl.startsWith('about:') || 
         newUrl.startsWith('edge://') ||
-        newUrl.startsWith('chrome-extension://')) {
-      console.log(`Skipping internal URL: ${newUrl}`);
+        newUrl.startsWith('chrome-extension://') ||
+        newUrl.startsWith('https://mail.google.com')) {
+      console.log(`Skipping internal/whitelisted URL: ${newUrl}`);
       return;
     }
     

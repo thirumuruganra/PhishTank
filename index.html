@@ -39,14 +39,20 @@
 
                 <!-- Whitelist Tab -->
                 <main class="tab-content">
-                    <h2 class="sub-heading">Whitelist</h2>
+                    <div class="tab-header">
+                        <h2 class="sub-heading">Whitelist</h2>
+                        <button class="clear-btn" id="clear-whitelist-btn">Clear</button>
+                    </div>
                     <p class="description">A list of your trusted URLs will appear here.</p>
                     <div id="whitelist-list"></div>
                 </main>
 
                 <!-- Blacklist Tab -->
                 <main class="tab-content">
-                    <h2 class="sub-heading">Blacklist</h2>
+                    <div class="tab-header">
+                        <h2 class="sub-heading">Blacklist</h2>
+                        <button class="clear-btn" id="clear-blacklist-btn">Clear</button>
+                    </div>
                     <p class="description">A list of your blocked URLs will appear here.</p>
                     <div id="blacklist-list"></div>
                 </main>
@@ -56,6 +62,9 @@
         <div class="scanner-toggle">
             <button class="toggle-btn active" id="scan-url-btn">Scan URL</button>
             <button class="toggle-btn" id="scan-webpage-btn">Scan Webpage</button>
+        </div>
+        <div class="clear-all-section">
+            <button class="clear-all-btn" id="clear-all-btn">Clear All History</button>
         </div>
         <footer>
             <button class="icon-btn" id="nav-btn">
