@@ -66,6 +66,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const closeAlertBtn = document.getElementById('close-alert-btn');
     const scanUrlBtn = document.getElementById('scan-url-btn');
     const scanEmailBtn = document.getElementById('scan-email-btn');
+    const navBtn = document.getElementById('nav-btn');
+    const actionsContainer = document.querySelector('.actions-container');
 
     chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
         const tab = tabs[0];
@@ -230,8 +232,13 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+    
+    if (navBtn && actionsContainer) {
+        navBtn.addEventListener('click', () => {
+            actionsContainer.classList.toggle('collapsed');
+        });
+    }
 
-    document.getElementById('nav-btn')?.addEventListener('click', () => console.log("Nav button clicked!"));
     document.getElementById('user-btn')?.addEventListener('click', () => console.log("User button clicked!"));
     document.getElementById('settings-btn')?.addEventListener('click', () => console.log("Settings button clicked!"));
 });
