@@ -1,42 +1,85 @@
-function loadAllClassifiedUrls() {
+/**
+ * ui.js
+ * * This file handles all user interface logic for the PhishTank extension.
+ * * THIS VERSION INCLUDES A CORRECTLY PLACED HARD-CODED SAMPLE EMAIL.
+ */
+
+function loadAllItems() {
     chrome.storage.local.get(null, function(items) {
-        // Get containers
-        const threatsList = document.getElementById('threats-list');
-        const whitelistList = document.getElementById('whitelist-list');
-        const blacklistList = document.getElementById('blacklist-list');
+        // Get containers for all four lists from index.html
+        const whitelistUrlList = document.getElementById('whitelist-list-url');
+        const whitelistEmailList = document.getElementById('whitelist-list-email');
+        const blacklistUrlList = document.getElementById('blacklist-list-url');
+        const blacklistEmailList = document.getElementById('blacklist-list-email');
 
-        // Clear
-        if (threatsList) threatsList.innerHTML = '';
-        if (whitelistList) whitelistList.innerHTML = '';
-        if (blacklistList) blacklistList.innerHTML = '';
+        // Clear all lists to prevent displaying duplicate items on refresh
+        if (whitelistUrlList) whitelistUrlList.innerHTML = '';
+        if (whitelistEmailList) whitelistEmailList.innerHTML = '';
+        if (blacklistUrlList) blacklistUrlList.innerHTML = '';
+        if (blacklistEmailList) blacklistEmailList.innerHTML = '';
 
-        // Fill lists
-        for (const [url, classification] of Object.entries(items)) {
-            // Skip non-web URLs
-            if (!url.startsWith('http')) continue;
-            let cardHTML = `
-                <div class="card">
-                    <span class="icon ${classification === "blacklist" ? "warn-icon" : "safe-icon"}">${classification === "blacklist" ? "!" : "✔"}</span>
-                    <div class="card-details">
-                        <h3>${classification === "blacklist" ? "Blacklisted" : "Whitelisted"} URL</h3>
-                        <p class="url">${url}</p>
+        // Loop through every item saved in storage to display them
+        for (const [key, value] of Object.entries(items)) {
+            // Logic for URL items
+            if (typeof value === 'string' && key.startsWith('http')) {
+                const classification = value;
+                const cardHTML = `
+                    <div class="card">
+                        <span class="icon ${classification === "blacklist" ? "warn-icon" : "safe-icon"}">${classification === "blacklist" ? "!" : "✔"}</span>
+                        <div class="card-details">
+                            <h3>${classification === "blacklist" ? "Blacklisted" : "Whitelisted"} URL</h3>
+                            <p class="url">${key}</p>
+                        </div>
+                    </div>
+                `;
+                if (classification === "blacklist" && blacklistUrlList) blacklistUrlList.innerHTML += cardHTML;
+                if (classification === "whitelist" && whitelistUrlList) whitelistUrlList.innerHTML += cardHTML;
+            }
+        }
+
+        // ==================================================================
+        // == HARD-CODED SAMPLE EMAIL FOR VISUAL DESIGN                    ==
+        // This block is now INSIDE the callback, so it runs after the lists
+        // are cleared and will not be erased.
+        // ==================================================================
+        const sampleFrom = "support-scam@paypai.co";
+        const sampleSubject = "Action Required: Account Suspended";
+        const sampleBody = "Please verify your details immediately to avoid permanent closure.";
+        const truncatedBody = sampleBody.substring(0, 15) + '...';
+
+        const emailCardHTML = `
+            <div class="card">
+                <div class="card-details">
+                    <h3>Suspicious Mail</h3>
+                    <p class="email-address">${sampleFrom}</p>
+                    <div class="email-details-card">
+                        <span class="icon warn-icon">!</span>
+                        <div>
+                            <span class="email-subject">${sampleSubject}</span>
+                            <span class="email-body">${truncatedBody}</span>
+                        </div>
                     </div>
                 </div>
-            `;
-            if (classification === "blacklist" && blacklistList) blacklistList.innerHTML += cardHTML;
-            if (classification === "whitelist" && whitelistList) whitelistList.innerHTML += cardHTML;
+            </div>
+        `;
+        // Inject the sample email card into the blacklist email list
+        if (blacklistEmailList) {
+            blacklistEmailList.innerHTML = emailCardHTML;
         }
+        // ==================================================================
     });
 }
 
-// Always refresh lists on storage change
+// LISTENER FOR STORAGE CHANGES
 chrome.storage.onChanged.addListener(function(changes, areaName) {
-    if (areaName === "local") loadAllClassifiedUrls();
+    if (areaName === "local") {
+        loadAllItems();
+    }
 });
 
-// Document Ready
+// MAIN EXECUTION BLOCK - RUNS WHEN THE POPUP IS OPENED
 document.addEventListener('DOMContentLoaded', function () {
-    loadAllClassifiedUrls();
+    loadAllItems();
 
     const threatsList = document.getElementById('threats-list');
     const tempAlert = document.querySelector('.temporary-alert');
@@ -45,31 +88,19 @@ document.addEventListener('DOMContentLoaded', function () {
     const contentSlider = document.querySelector('.content-slider');
     const closeAlertBtn = document.getElementById('close-alert-btn');
     const scanUrlBtn = document.getElementById('scan-url-btn');
-    const scanWebpageBtn = document.getElementById('scan-webpage-btn');
+    const scanEmailBtn = document.getElementById('scan-email-btn');
 
-    // Show alert if current tab is blacklisted
-    chrome.tabs.query({ active: true, currentWindow: true }, async function(tabs) {
+    chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
         const tab = tabs[0];
         if (tab && tab.url) {
             chrome.storage.local.get([tab.url], function(result) {
                 if (result[tab.url] === 'blacklist') {
                     tempAlert.classList.remove('hidden');
-                    const cardHTML = `
-                        <div class="card">
-                            <span class="icon warn-icon">!</span>
-                            <div class="card-details">
-                                <h3>Blacklisted URL</h3>
-                                <p class="url">${tab.url}</p>
-                            </div>
-                        </div>
-                    `;
-                    threatsList.innerHTML = cardHTML;
                 }
             });
         }
     });
 
-    // Handle tab switching UI
     function updateSlider(tab) {
         const tabWidth = tab.offsetWidth;
         const tabOffsetLeft = tab.offsetLeft;
@@ -82,7 +113,9 @@ document.addEventListener('DOMContentLoaded', function () {
         tab.classList.add('active');
     }
     const initialActiveTab = document.querySelector('.nav-tab.active');
-    if (initialActiveTab) setTimeout(() => updateSlider(initialActiveTab), 0);
+    if (initialActiveTab) {
+        setTimeout(() => updateSlider(initialActiveTab), 0);
+    }
     navTabs.forEach(tab => {
         tab.addEventListener('click', (event) => {
             event.preventDefault();
@@ -90,26 +123,23 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // Temporary alert close
     if (closeAlertBtn && tempAlert) {
         closeAlertBtn.addEventListener('click', () => {
             tempAlert.classList.add('hidden');
         });
     }
 
-    // Scanner toggle
-    if (scanUrlBtn && scanWebpageBtn) {
+    if (scanUrlBtn && scanEmailBtn) {
         scanUrlBtn.addEventListener('click', () => {
             scanUrlBtn.classList.add('active');
-            scanWebpageBtn.classList.remove('active');
+            scanEmailBtn.classList.remove('active');
         });
-        scanWebpageBtn.addEventListener('click', () => {
-            scanWebpageBtn.classList.add('active');
+        scanEmailBtn.addEventListener('click', () => {
+            scanEmailBtn.classList.add('active');
             scanUrlBtn.classList.remove('active');
         });
     }
 
-    // Footer nav
     document.getElementById('nav-btn')?.addEventListener('click', () => console.log("Nav button clicked!"));
     document.getElementById('user-btn')?.addEventListener('click', () => console.log("User button clicked!"));
     document.getElementById('settings-btn')?.addEventListener('click', () => console.log("Settings button clicked!"));
