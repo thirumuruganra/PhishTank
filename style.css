@@ -13,6 +13,16 @@
     --font-heading: 'Inter', sans-serif;
     --font-body: 'Poppins', sans-serif;
 }
+
+/* Hide all scrollbars globally */
+* {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+}
+*::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+}
+
 html, body {
     width: 420px;
     height: 750px;
@@ -135,14 +145,4 @@ footer { background-color: var(--footer-bg); display: flex; justify-content: spa
     max-height: 0;
     padding-top: 0;
     padding-bottom: 0;
-}
-.scrollable-list::-webkit-scrollbar {
-  width: 5px;
-}
-.scrollable-list::-webkit-scrollbar-track {
-  background: transparent;
-}
-.scrollable-list::-webkit-scrollbar-thumb {
-  background-color: var(--subtle-text);
-  border-radius: 20px;
 }
