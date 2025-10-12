@@ -21,6 +21,7 @@ html, body {
     padding: 0;
     font-family: var(--font-body);
     background-color: var(--outer-bg);
+    overflow-y: hidden; /* ADDED: This will remove the outer vertical scrollbar */
 }
 
 .inner-window {
@@ -76,9 +77,16 @@ nav a.active { color: var(--primary-text-accent); font-weight: 700; }
 .sub-heading { font-family: var(--font-heading); font-size: 16px; color: var(--highlighted-threats-text); font-weight: 700; margin: 0 0 10px 0; flex-shrink: 0; }
 .card { gap: 15px; }
 .icon.warn-icon { color: var(--warning-color); border: 2px solid var(--warning-color); border-radius: 50%; width: 24px; height: 24px; display: flex; justify-content: center; align-items: center; font-weight: bold; flex-shrink: 0; }
+.card-details {
+    min-width: 0; 
+}
 .card-details h3 { font-family: var(--font-heading); font-size: 16px; margin: 0 0 4px 0; }
 .card-details p { margin: 0; font-size: 14px; }
-.card-details .url { font-weight: 500; margin-bottom: 8px; }
+.card-details .url { 
+    font-weight: 500; 
+    margin-bottom: 8px; 
+    overflow-wrap: break-word; 
+}
 .card-details .description { font-size: 13px; color: var(--subtle-text); }
 
 /* toggle scanner */
