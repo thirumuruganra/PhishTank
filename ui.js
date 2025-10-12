@@ -239,6 +239,17 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+    const listHeaders = document.querySelectorAll('.list-header');
+    listHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const listContainer = header.closest('.list-container');
+            if (listContainer) {
+                listContainer.classList.toggle('collapsed');
+            }
+        });
+    });
+
     document.getElementById('user-btn')?.addEventListener('click', () => console.log("User button clicked!"));
     document.getElementById('settings-btn')?.addEventListener('click', () => console.log("Settings button clicked!"));
+
 });
