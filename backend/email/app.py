@@ -128,7 +128,7 @@ async def health_check():
     }
 
 
-@app.post("/predict", response_model=PredictionResponse)
+@app.post("/predictemail", response_model=PredictionResponse)
 async def predict_phishing(request: EmailRequest):
     """Predict if an email is phishing or legitimate"""
     try:
@@ -177,7 +177,7 @@ async def predict_phishing(request: EmailRequest):
         raise HTTPException(status_code=500, detail=f"Prediction failed: {str(e)}")
 
 
-@app.post("/predict_batch")
+@app.post("/predict_batch_email")
 async def predict_batch(emails: list[EmailRequest]):
     """Batch prediction endpoint for multiple emails"""
     try:
