@@ -387,8 +387,7 @@ The browser extension features a clean, intuitive interface:
     </tr>
     <tr>
       <td align="center" width="50%">
-        <img src="
-        screenshots/Screenshot%202025-10-12%20180533.png" alt="Whitelist" width="100%"/>
+        <img src="screenshots/Screenshot%202025-10-12%20180533.png" alt="Whitelist" width="100%"/>
         <br/>
         <em>Whitelist management for URLs</em>
       </td>
