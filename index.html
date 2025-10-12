@@ -37,7 +37,10 @@
                 </main>
 
                 <main class="tab-content">
-                    <h2 class="sub-heading">Whitelist</h2>
+                    <div class="tab-header">
+                        <h2 class="sub-heading">Whitelist</h2>
+                        <button class="clear-btn" id="clear-whitelist-btn">Clear</button>
+                    </div>
                     <p class="description">A list of your trusted URLs and emails will appear here.</p>
                     <div class="list-container">
                         <h4 class="list-header">Trusted URLs</h4>
@@ -50,7 +53,10 @@
                 </main>
 
                 <main class="tab-content">
-                    <h2 class="sub-heading">Blacklist</h2>
+                    <div class="tab-header">
+                        <h2 class="sub-heading">Blacklist</h2>
+                        <button class="clear-btn" id="clear-blacklist-btn">Clear</button>
+                    </div>
                     <p class="description">A list of your blocked URLs and emails will appear here.</p>
                     <div class="list-container">
                         <h4 class="list-header">Blocked URLs</h4>
@@ -67,6 +73,9 @@
         <div class="scanner-toggle">
             <button class="toggle-btn active" id="scan-url-btn">Scan URL</button>
             <button class="toggle-btn" id="scan-email-btn">Scan Email</button>
+        </div>
+        <div class="clear-all-section">
+            <button class="clear-all-btn" id="clear-all-btn">Clear All History</button>
         </div>
         <footer>
             <button class="icon-btn" id="nav-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></button>
