@@ -16,6 +16,11 @@
   "action": {
     "default_popup": "index.html"
   },
+  "icons": {
+    "16": "assets/PT_logo.png",
+    "48": "assets/PT_logo.png",
+    "128": "assets/PT_logo.png"
+  },
   "background": {
     "service_worker": "background.js",
     "type": "module"
