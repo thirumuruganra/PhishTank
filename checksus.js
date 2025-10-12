@@ -19,14 +19,18 @@ export function createDetectionNotification(result) {
 
 export async function sendUrlToBackend(url) {
     try {
-        const response = await fetch('http://127.0.0.1:8000/check_url', {
+        const response = await fetch('http://127.0.0.1:8000/predict', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url })
         });
 
         const data = await response.json();
-        return data.classification; // "whitelist" or "blacklist"
+        if (data.prediction == "legitimate") { // "whitelist" or "blacklist"
+            return "whitelist";
+        } else if (data.prediction == "phishing") {
+            return "blacklist";
+        }
     } catch (error) {
         console.error('Backend request failed:', error);
         return 'unknown';
