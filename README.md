@@ -427,12 +427,19 @@ The browser extension features a clean, intuitive interface:
 
 **Team Code Red** - ONL 553
 
+**Team Members:**
+- **Ananya Raman** - [opela05](https://github.com/opela05)
+- **Madussree Ravi** - [madussree-ravi](https://github.com/madussree-ravi)
+- **Shrika Thota** - [shrikathota](https://github.com/shrikathota)
+- **Sudarshan Olirvel** - [SudoShan](https://github.com/SudoShan)
+- **Thirumurugan RA** - [thirumuruganra](https://github.com/thirumuruganra/)
+
 This project was developed as part of the IBM Z Datathon 2025, focusing on cybersecurity and AI-driven threat detection.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **IBM** and the **Shooting Start foundation** for the opportunity to develop this solution
+- **IBM** and the **Shooting Stars foundation** for the opportunity to develop this solution
 - [Kaggle](https://www.kaggle.com/) for URL phishing dataset
 - [Zenodo](https://zenodo.org/) for email phishing dataset
